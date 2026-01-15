@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: objectmorph-auth-service
+spec:
+  selector:
+    app: objectmorph-auth
+  ports:
+  - protocol: TCP
+    port: 8080
+  type: ClusterIP
