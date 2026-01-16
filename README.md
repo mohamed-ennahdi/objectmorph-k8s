@@ -2,46 +2,7 @@
 
 # Introduction
 
-**ObjectMorph** is an application that can be used with any security restrictions. However, **ObjectMorph-K8S** role is to provide a secured interface for ObjectMorph application, without affecting the latter.
-
-# Prerequisites
-
-## Maven's settings.xml
-
-```
-<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd">
-  
-  
-  <activeProfiles>
-    <activeProfile>github</activeProfile>
-  </activeProfiles>
-
-  <profiles>
-    <profile>
-      <id>github</id>
-      <repositories>
-        <repository>
-          <id>github</id>
-          <url>https://maven.pkg.github.com/mohamed-ennahdi/objectmorph</url>
-          <snapshots>
-            <enabled>true</enabled>
-          </snapshots>
-        </repository>
-      </repositories>
-    </profile>
-  </profiles>
-  
-	<servers>
-	   <server>
-		  <id>github</id>
-		  <username>yourGitHubLogin</username>
-		  <password>yourGitHubPassword</password>
-	   </server>
-	</servers>  
-  
-</settings>
-```
+[ObjectMorph](https://github.com/mohamed-ennahdi/objectmorph) is an application that can be used without any security restrictions. However, **ObjectMorph-K8S** role is to provide a secured interface for ObjectMorph application, without affecting the latter.
 
 # ObjectMorph Authentication Module
 
@@ -94,12 +55,37 @@ eval $(minikube docker-env)
 @FOR /f "tokens=*" %i IN ('minikube docker-env') DO @%i
 ```
 
+# Demo
 
+The objectmorph-auth module's role is to secure the objectmorph-app using Bearer Token.
 
+With Postman, execute the following Request with **POST** method.
+
+[http://keycloak.172.31.10.157.nip.io/realms/objectmorph-realm/protocol/openid-connect/token](http://keycloak.172.31.10.157.nip.io/realms/objectmorph-realm/protocol/openid-connect/token)
+
+![](./documentation/postman-body-example.png)
+
+In the response, get the token from **access_token**.
+
+![](./documentation/postman-authorize-example.png)
+
+Go to Swagger, and click on Authorize and enter the token.
+
+Click on **Try it out** and click on Execute. Normally, the response has Code **200**.
+
+![](./documentation/postman-response-example.png)
 
 # Conclusion
 
+objectmorph-auth module provides authentication mechanism orchestrated with Spring Security and Spring Cloud.
+
 # Appendix
+
+Replace `172.31.10.157` by your respective IP obtainable from:
+
+```
+minikube ip
+```
 
 ## KeyCloak Setup with Spring Boot
 

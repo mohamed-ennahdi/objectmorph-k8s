@@ -3,8 +3,8 @@ package com.github.mohamedennahdi.objectmorph.auth.service;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.github.mohamedennahdi.objectmorph.app.dto.SourceCodeDto;
 import com.github.mohamedennahdi.objectmorph.auth.client.ObjectmorphAuthClient;
+import com.github.mohamedennahdi.objectmorph.auth.dto.SourceCodeDto;
 
 @Service
 public class ObjectmorphAuthService {

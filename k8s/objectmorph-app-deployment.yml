@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: objectmorph-app
+spec:
+  selector:
+      matchLabels:
+        app: objectmorph-app
+  template:
+    metadata:
+      labels:
+        app: objectmorph-app
+    spec:
+      containers:
+        - name: objectmorph-app
+          image: docker.io/ennahdi/objectmorph-app:0.1.7-SNAPSHOT
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
