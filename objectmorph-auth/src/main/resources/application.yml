@@ -7,28 +7,40 @@ spring:
         registration:
           keycloak:
             client-id: objectmorph-client
-#            client-secret: MPq1VZN1ZCNFmBFsqAgvCihRv4p2fVsn
             client-secret: ${CLIENT_SECRET}
             scope: openid,profile,email
             redirect-uri: http://objectmorph-auth-service:8080/login/oauth2/code/keycloak
         provider:
           keycloak:
             issuer-uri: "http://keycloak:8080/realms/objectmorph-realm"
+      resourceserver:
+        jwt:
+          issuer-uri: ${ISSUER_URI}
+          jwk-set-uri: ${JWK_SET_URI}
+          audiences: objectmorph-auth
+  cloud:
+    openfeign:
+      client:
+        config:
+          objectmorph-app-client:
+            url: ${OBJECTMORPH_SERVICE_URL:http://localhost:8080}
 logging:
   level:
     root: INFO
     # General Spring Security logging
-    org.springframework.security: DEBUG
-    # Detailed logging for OAuth2 and OIDC components
-    org.springframework.security.oauth2: DEBUG
-    # Logging for JWT decoding and validation
-    org.springframework.security.oauth2.server.resource.authentication: DEBUG
-    # Detailed logging for web request processing within Spring Security filter chain
-    org.springframework.security.web.FilterChainProxy: DEBUG
-    # Logging for HTTP requests made by Spring's internal RestTemplate components (e.g., fetching JWKS)
-    org.springframework.web.client.RestTemplate: DEBUG
-    # If using Keycloak-specific libraries (though the official adapters are deprecated in favor of Spring Security)
-    org.keycloak: DEBUG
+    org:
+      springframework:
+        security:
+          oauth2:
+            server:
+              resource:
+                authentication: DEBUG
+          jwt: DEBUG
+          web:
+            FilterChainProxy: DEBUG
+          client:
+            RestTemplate: DEBUG
+      keycloak: DEBUG
   pattern:
     console: "[%level] %d{yyyy-MM-dd HH:mm:ss} - %logger{1.} - %msg%n"
 server:

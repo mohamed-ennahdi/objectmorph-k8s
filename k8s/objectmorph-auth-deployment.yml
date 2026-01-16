@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: objectmorph-auth
+spec:
+  selector:
+      matchLabels:
+        app: objectmorph-auth
+  template:
+    metadata:
+      labels:
+        app: objectmorph-auth
+    spec:
+      containers:
+        - name: objectmorph-auth
+          image: docker.io/ennahdi/objectmorph-auth:0.0.1-SNAPSHOT
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CLIENT_SECRET
+              value: qVjGFrevwDd0v9B0rWgoX9WgiBVZGFlW
+            - name: ISSUER_URI
+              value: http://keycloak.172.31.10.157.nip.io/realms/objectmorph-realm
+            - name: JWK_SET_URI
+              value: http://keycloak:8080/realms/objectmorph-realm/protocol/openid-connect/certs
+            - name: OBJECTMORPH_SERVICE_URL
+              value: http://objectmorph-app:8080/
