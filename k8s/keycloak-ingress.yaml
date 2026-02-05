@@ -3,14 +3,14 @@ kind: Ingress
 metadata:
   name: keycloak-ingress
   annotations:
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/backend-protocol: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   tls:
     - hosts:
-        - keycloak.172.31.10.157.nip.io
+      - keycloak.172.20.182.38.nip.io
+      secretName: objectmorph-keycloak-tls-secret
   rules:
-    - host: keycloak.172.31.10.157.nip.io
+    - host: keycloak.172.20.182.38.nip.io
       http:
         paths:
           - path: /

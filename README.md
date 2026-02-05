@@ -55,6 +55,51 @@ eval $(minikube docker-env)
 @FOR /f "tokens=*" %i IN ('minikube docker-env') DO @%i
 ```
 
+#### Create Docker Image
+
+Execute the following instruction in objectmorph-auth's POM.xml folder:
+
+```
+mvn org.springframework.boot:spring-boot-maven-plugin:build-image
+```
+
+## Enable SSL
+
+To enable SSL, a certificate must be created. Execute the following command (Git bash):
+
+For Keycloak:
+
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout objectmorph-keycloak.key -out objectmorph-keycloak.crt -subj "//C=MA\ST=Rabat\L=Rabat\O=github\CN=keycloak.172.31.10.157.nip.io" -addext "subjectAltName = DNS:keycloak.172.31.10.157.nip.io, DNS:.172.31.10.157.nip.io, IP:172.31.10.157"
+
+```
+
+For objectmorph-auth:
+
+```
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout objectmorph.key -out objectmorph.crt -subj "//C=MA\ST=Rabat\L=Rabat\O=github\CN=auth.objectmorph.172.31.10.157.nip.io" -addext "subjectAltName = DNS:auth.objectmorph.172.31.10.157.nip.io, DNS:.172.31.10.157.nip.io, IP:172.31.10.157"
+```
+
+This instruction will create 2 objects:
+
+ - objectmorph.key
+ - objectmorph.crt
+ 
+This certificate must be take into account by Kubernetes. Execute the following command to create TLS secret:
+
+```
+kubectl create secret tls objectmorph-keycloak-tls-secret --cert=<path-to-certificate>/objectmorph-keycloak.crt --key=<path-to-certificate>/objectmorph-keycloak.key
+kubectl create secret tls objectmorph-tls-secret --cert=<path-to-certificate>/objectmorph.crt --key=<path-to-certificate>/objectmorph.key
+```
+
+On Windows, for the certificate to be recognized, it must be added to **Trusted Root Certification Authorities**.
+
+If the certificate is not trusted, with the warning message "*Kubernetes Ingress Controller Fake Certificate*", use the following tip:
+
+![](./documentation/kubernetes-ingress-controller-fake-certificate-warning-tip.png)
+
+[Tip Source](https://docs.azure.cn/en-us/aks/ingress-own-tls?tabs=azure-cli#create-an-ingress-route)
+ 
 # Demo
 
 The objectmorph-auth module's role is to secure the objectmorph-app using Bearer Token.

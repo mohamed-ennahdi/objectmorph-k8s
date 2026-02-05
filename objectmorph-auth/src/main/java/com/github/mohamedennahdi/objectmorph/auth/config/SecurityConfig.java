@@ -86,7 +86,7 @@ public class SecurityConfig {
 				.info(new Info().title("ObjectMorph REST API")
 						.description("Authorization module for ObjectMorph API.")
 						.version("1.0").contact(new Contact().name("Mohamed ENNAHDI EL IDRISSI")
-								.email( "www.github.com/mohamed-ennahdi").url("mohamed.ennahdi@gmail.com"))
+								.email("mohamed.ennahdi@gmail.com").url("https://www.github.com/mohamed-ennahdi"))
 						.license(new License().name("Apache-2.0 license")
 								.url("https://github.com/mohamed-ennahdi/objectmorph-k8s?tab=Apache-2.0-1-ov-file#readme")));
 	}
