@@ -2,16 +2,15 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: objectmorph-ingress
-#  annotations:
-#    # This annotation tells NGINX to rewrite the path to '/' before sending to the service
-#    nginx.ingress.kubernetes.io/rewrite-target: /
-#    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
-#  tls:
-#    - hosts:
-#        - objectmorph.172.31.10.157.nip.io
+  tls:
+    - hosts:
+      - objectmorph.172.20.182.38.nip.io
+      secretName: objectmorph-tls-secret
   rules:
-    - host: app.objectmorph.172.31.10.157.nip.io
+    - host: app.objectmorph.172.20.182.38.nip.io
       http:
         paths:
           - path: /
@@ -21,7 +20,7 @@ spec:
                 name: objectmorph-app
                 port:
                   number: 8080
-    - host: auth.objectmorph.172.31.10.157.nip.io
+    - host: auth.objectmorph.172.20.182.38.nip.io
       http:
         paths:
           - path: /

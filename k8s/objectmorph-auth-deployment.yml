@@ -21,8 +21,44 @@ spec:
             - name: CLIENT_SECRET
               value: qVjGFrevwDd0v9B0rWgoX9WgiBVZGFlW
             - name: ISSUER_URI
-              value: http://keycloak.172.31.10.157.nip.io/realms/objectmorph-realm
+              value: https://keycloak.172.20.182.38.nip.io/realms/objectmorph-realm
             - name: JWK_SET_URI
               value: http://keycloak:8080/realms/objectmorph-realm/protocol/openid-connect/certs
             - name: OBJECTMORPH_SERVICE_URL
               value: http://objectmorph-app:8080/
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              # The following commands are for Debug
+              # find / -name *.jar
+              # find / -name objectmorph*
+              # find / -name pom.xml
+              # ls -l /workspace/META-INF/maven/com.github.mohamed-ennahdi/objectmorph-auth
+              # ls -l /workspace/BOOT-INF/classes/com/github/mohamedennahdi/objectmorph/auth
+              
+              export JAVA_HOME=/layers/paketo-buildpacks_bellsoft-liberica/jre
+              
+              # Import self-signed certificate to JRE's keystore
+              ${JAVA_HOME}/bin/keytool -import -trustcacerts -keystore ${JAVA_HOME}/lib/security/cacerts  -storepass changeit -alias objectmorph-cert -file /certs/tls.crt -noprompt
+              
+              # The following commands are for Debug
+              # ${JAVA_HOME}/bin/keytool -printcert -v -file /certs/tls.crt
+              
+              cd /workspace/BOOT-INF/classes/
+              
+              # The following commands are for Debug
+              # ls -l
+              # pwd
+              
+              # Explicitly running the application inside the Pod
+              ${JAVA_HOME}/bin/java -cp ".:/workspace/BOOT-INF/lib/*" com.github.mohamedennahdi.objectmorph.auth.ObjectmorphAuthApplication  
+          volumeMounts:
+            - name: cert-volume
+              mountPath: /certs
+              readOnly: true
+      volumes:
+        - name: cert-volume
+          secret:
+            secretName: objectmorph-keycloak-tls-secret
+        - name: truststore-data
+          emptyDir: {}
