@@ -7,7 +7,7 @@ spring:
         registration:
           keycloak:
             client-id: objectmorph-client
-            client-secret: hMYLCSLU7LZMtTgx4ogfYgXINQiba4NB
+            client-secret: 0qinDLYvjrkty2ioFjVQQqLLlbI4pYWU
             scope: openid,profile,email
             redirect-uri: '{baseUrl}/login/oauth2/code/keycloak'
         provider:
@@ -17,6 +17,12 @@ spring:
         jwt:
           issuer-uri: http://localhost:8088/realms/objectmorph-realm
           audiences: objectmorph-auth
+  cloud:
+    openfeign:
+      client:
+        config:
+          objectmorph-app-client:
+            url: ${OBJECTMORPH_SERVICE_URL:http://localhost:8080}
 logging:
   level:
     root: INFO
