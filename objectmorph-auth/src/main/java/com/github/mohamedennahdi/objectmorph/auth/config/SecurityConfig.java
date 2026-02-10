@@ -3,6 +3,7 @@ package com.github.mohamedennahdi.objectmorph.auth.config;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -43,13 +44,15 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(final HttpSecurity http/*, final LogoutSuccessHandler logoutSuccessHandler*/) throws Exception {
-		http
+		http.csrf(csrf -> csrf.disable())
 		// Configures authorization rules for different endpoints
 		.authorizeHttpRequests(authorize -> authorize
-				.requestMatchers("/").permitAll() // Allows public access to the root URL
-				.requestMatchers("/swagger-ui/*").permitAll() // Allows public access to the root URL
-				.requestMatchers("/v3/api-docs/*").permitAll() // Allows public access to the root URL
-				.requestMatchers("/v3/api-docs*").permitAll() // Allows public access to the root URL
+				.requestMatchers("/").permitAll()
+				.requestMatchers(HttpMethod.POST, "/api/v1/authenticate*").permitAll()
+				.requestMatchers("/error").permitAll()
+				.requestMatchers("/swagger-ui/*").permitAll()
+				.requestMatchers("/v3/api-docs/*").permitAll()
+				.requestMatchers("/v3/api-docs*").permitAll()
 				.anyRequest().authenticated() // Requires authentication for any other request
 				)
 		.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults())

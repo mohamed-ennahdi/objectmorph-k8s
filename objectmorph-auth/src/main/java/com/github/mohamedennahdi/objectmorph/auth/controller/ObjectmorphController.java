@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.mohamedennahdi.objectmorph.auth.dto.SourceCodeDto;
 import com.github.mohamedennahdi.objectmorph.auth.service.ObjectmorphAuthService;
 
-import io.swagger.v3.oas.annotations.Parameter;
-
 @RestController
 public class ObjectmorphController {
 
@@ -20,8 +18,7 @@ public class ObjectmorphController {
 	}
 
 	@PostMapping( value = "/api/v1/html" )
-	public ResponseEntity<String> html(@Parameter(name = "sourceCode", description = "Source Code", example = "class SourceCode { int attribute1; int attribute2; SourceCode(){} public int getAttribute1() { return attribute1;}}")
-	@RequestBody final	SourceCodeDto[] sourceCode) {
+	public ResponseEntity<String> html(@RequestBody final SourceCodeDto[] sourceCode) {
 		return objectmorphAuthService.html(sourceCode);
 	}
 }
