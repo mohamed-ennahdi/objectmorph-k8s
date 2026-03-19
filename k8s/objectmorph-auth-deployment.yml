@@ -21,7 +21,7 @@ spec:
             - name: CLIENT_SECRET
               value: qVjGFrevwDd0v9B0rWgoX9WgiBVZGFlW
             - name: ISSUER_URI
-              value: https://keycloak.172.20.182.38.nip.io/realms/objectmorph-realm
+              value: https://keycloak.172.31.202.185.nip.io/realms/objectmorph-realm
             - name: JWK_SET_URI
               value: http://keycloak:8080/realms/objectmorph-realm/protocol/openid-connect/certs
             - name: OBJECTMORPH_SERVICE_URL
