@@ -17,3 +17,6 @@ spec:
           imagePullPolicy: Never
           ports:
             - containerPort: 8080
+          env:
+            - name: LOGSTASH_SERVER
+              value: logstash.logging.svc.cluster.local:5045
