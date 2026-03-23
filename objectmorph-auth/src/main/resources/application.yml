@@ -12,7 +12,7 @@ spring:
             redirect-uri: http://objectmorph-auth-service:8080/login/oauth2/code/keycloak
         provider:
           keycloak:
-            issuer-uri: "http://keycloak:8080/realms/objectmorph-realm"
+            issuer-uri: ${ISSUER_URI}
       resourceserver:
         jwt:
           issuer-uri: ${ISSUER_URI}
@@ -25,6 +25,8 @@ spring:
           objectmorph-app-client:
             url: ${OBJECTMORPH_SERVICE_URL:http://localhost:8080}
 logging:
+  logstash:
+    server: ${LOGSTASH_SERVER}
   level:
     root: INFO
     # General Spring Security logging
