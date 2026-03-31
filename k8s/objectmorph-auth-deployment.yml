@@ -19,13 +19,15 @@ spec:
             - containerPort: 8080
           env:
             - name: CLIENT_SECRET
-              value: qVjGFrevwDd0v9B0rWgoX9WgiBVZGFlW
+              value: LWQuLcM5GYL17b0YnvAHYCSldG33RGbM
             - name: ISSUER_URI
-              value: https://keycloak.172.31.202.185.nip.io/realms/objectmorph-realm
+              value: https://keycloak.192.168.178.76.nip.io/realms/objectmorph-realm
             - name: JWK_SET_URI
               value: http://keycloak:8080/realms/objectmorph-realm/protocol/openid-connect/certs
             - name: OBJECTMORPH_SERVICE_URL
               value: http://objectmorph-app:8080/
+            - name: LOGSTASH_SERVER
+              value: logstash.logging:5045
           command: ["/bin/sh", "-c"]
           args:
             - |

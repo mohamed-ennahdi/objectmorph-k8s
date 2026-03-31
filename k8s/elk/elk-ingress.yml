@@ -10,7 +10,7 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   rules:
-    - host: kibana.172.31.202.185.nip.io
+    - host: kibana.192.168.178.76.nip.io
       http:
         paths:
           - path: /
