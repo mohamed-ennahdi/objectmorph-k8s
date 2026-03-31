@@ -7,10 +7,10 @@ metadata:
 spec:
   tls:
     - hosts:
-      - keycloak.172.31.200.90.nip.io
+      - keycloak.192.168.178.76.nip.io
       secretName: objectmorph-keycloak-tls-secret
   rules:
-    - host: keycloak.172.31.200.90.nip.io
+    - host: keycloak.192.168.178.76.nip.io
       http:
         paths:
           - path: /

@@ -62,7 +62,7 @@ data:
       # Add this for your ObjectMorph Spring app
       tcp {
         port => 5045
-        codec => json_lines
+        codec => json
       }
     }
     output {
